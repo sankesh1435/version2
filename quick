@@ -1,0 +1,62 @@
+#include <stdio.h>
+
+void interchange(int a[], int I, int j) {
+    int p = a[I];
+    a[I] = a[j];
+    a[j] = p;
+}
+
+int partition(int a[], int m, int p) {
+    int v = a[m];
+    int I = m;
+    int j = p;
+
+    while (1) {
+        while (a[I] < v) {
+            I++;
+        }
+        while (a[j] > v) {
+            j--;
+        }
+
+        if (I >= j) {
+            break;
+        }
+
+        interchange(a, I, j);
+    }
+
+    a[m] = a[j];
+    a[j] = v;
+
+    return j;
+}
+
+void quickSort(int a[], int m, int p) {
+    if (m < p) {
+        int q = partition(a, m, p);
+        quickSort(a, m, q - 1);
+        quickSort(a, q + 1, p);
+    }
+}
+
+int main() {
+    int n = 8; // Number of elements in the array
+
+    int a[8] = {12, 11, 13, 5, 6, 7, 8, 10};
+
+    printf("Original array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", a[i]);
+    }
+
+    quickSort(a, 0, n - 1);
+
+    printf("\nSorted array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", a[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
